@@ -22,7 +22,6 @@ ES_PORT=2000
 KIBANA_PORT=2001
 
 USERNAME=test
-DGID=1000
 DUID=1000
 ```
 
@@ -41,7 +40,6 @@ Kibana port: 3333
 Project = TRAIN
 USERNAME =  es10
 UID =  1011
-GID =  1011
 ELK =  7.6.0
 ES Port =  2222
 Kibana Port =  3333
@@ -53,13 +51,7 @@ First time
 ```
 $ docker-compose up -d
 ```
-If rebuild
 
-```
-$ docker-compose down
-$ docker-compose build
-$ docker-compose up -d
-```
 Check docker services
 
 ```
@@ -72,20 +64,6 @@ Output
 ----------------------------------------------------------------------------------------------------------
 elasticsearchtraining_es_1       /usr/local/bin/docker-entr ...   Up      0.0.0.0:2222->9200/tcp, 9300/tcp
 elasticsearchtraining_kibana_1   /usr/local/bin/dumb-init - ...   Up      0.0.0.0:3333->5601/tcp
-```
-
-And check your docker image
-
-```
-$ docker images
-```
-
-Output
-
-```
-REPOSITORY                                      TAG                               IMAGE ID            CREATED              SIZE
-es10/elasticsearch                              7.6.0                             b27c220e20b1        About a minute ago   1.79GB
-
 ```
 
 ## Test Elasticsearch server
