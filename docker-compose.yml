@@ -1,0 +1,66 @@
+version: '2.2'
+services:
+
+  es:
+    build: 
+     context: .
+     args:
+       - 'ELK_VERSION=$ELK_VERSION'
+       - 'DGID=$DGID'
+       - 'DUID=$DUID'
+
+    restart: always
+    image: $USERNAME/elasticsearch:$ELK_VERSION
+    #image: docker.elastic.co/elasticsearch/elasticsearch:$ELK_VERSION
+    environment:
+      - node.name=es
+      - cluster.name=es-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - discovery.type=single-node
+      - action.auto_create_index=true
+      - network.host=0.0.0.0
+      - cluster.routing.allocation.disk.threshold_enabled=false
+      - action.destructive_requires_name=false
+      - http.cors.enabled=true
+      - "http.cors.allow-origin='*'"
+      - "http.cors.allow-methods=OPTIONS, HEAD, GET, POST, PUT, DELETE"
+      - "http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type, Content-Length"
+      - xpack.security.enabled=false
+      - xpack.monitoring.enabled=false
+      - xpack.ml.enabled=false
+      - xpack.watcher.enabled=false
+      - logger.level=WARN
+
+    volumes:
+      - ./es_data:/usr/share/elasticsearch/data
+    ports:
+      - $ES_PORT:9200
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    cpus: 2
+    mem_limit: 2g
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:$ELK_VERSION
+    restart: always
+    cpus: 1
+    mem_limit: 500m
+
+    depends_on:
+      - es
+    environment:
+      SERVER_NAME: $PROJECT_NAME
+      ELASTICSEARCH_HOSTS: http://es:9200
+      XPACK_MONITORING_ENABLED: "true"
+      SERVER_HOST: 0.0.0.0
+      XPACK_MONITORING_UI_CONTAINER_ELASTICSEACH_ENABLED: "false"
+      ELASTICSEARCH_REQUESTTIMEOUT: 50000
+      LOGGING_JSON: "false"
+      LOGGING_QUIET: "true"
+      #SERVER_BASEPATH: /kib
+
+    ports:
+      - $KIBANA_PORT:5601
