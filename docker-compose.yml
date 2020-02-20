@@ -2,15 +2,8 @@ version: '2.2'
 services:
 
   es:
-    build: 
-     context: .
-     args:
-       - 'ELK_VERSION=$ELK_VERSION'
-       - 'DUID=$DUID'
-
     restart: always
-    image: $USERNAME/elasticsearch:$ELK_VERSION
-    #image: docker.elastic.co/elasticsearch/elasticsearch:$ELK_VERSION
+    image: docker.elastic.co/elasticsearch/elasticsearch:$ELK_VERSION
     environment:
       - node.name=es
       - cluster.name=es-cluster
@@ -32,6 +25,8 @@ services:
       - logger.level=WARN
 
     volumes:
+      - ./.env:/.env
+      - /docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
       - ./es_data:/usr/share/elasticsearch/data
     ports:
       - $ES_PORT:9200
