@@ -6,7 +6,6 @@ services:
      context: .
      args:
        - 'ELK_VERSION=$ELK_VERSION'
-       - 'DGID=$DGID'
        - 'DUID=$DUID'
 
     restart: always

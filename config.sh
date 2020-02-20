@@ -14,7 +14,6 @@ echo -n "Kibana port: "
 read KIBANA_PORT
 
 sed -i -e "s/^USERNAME=[A-Za-z0-9_]*/USERNAME=$USER/g" .env
-sed -i -e "s/^DGID=[A-Za-z0-9_]*/DGID=$(id -g)/g" .env
 sed -i -e "s/^DUID=[A-Za-z0-9_]*/DUID=$(id -u)/g" .env
 sed -i -e "s/^ELK_VERSION=[A-Za-z0-9_\.]*/ELK_VERSION=$ELK_VERSION/g" .env
 sed -i -e "s/^ES_PORT=[A-Za-z0-9_]*/ES_PORT=$ES_PORT/g" .env
@@ -26,7 +25,6 @@ echo
 echo "Project = $PROJECT_NAME"
 echo "USERNAME =  $USER"
 echo "UID =  $(id -u)"
-echo "GID =  $(id -g)"
 echo "ELK =  $ELK_VERSION"
 echo "ES Port =  $ES_PORT"
 echo "Kibana Port =  $KIBANA_PORT"
