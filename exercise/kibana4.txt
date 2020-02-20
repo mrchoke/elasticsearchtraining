@@ -1,0 +1,23 @@
+DELETE
+
+DELETE <index>>/_doc/<_id>
+
+---
+By query
+
+POST index2/_search
+{
+  "query": {
+    "match": {
+      "gender": "male"
+    }
+  }
+}
+POST index2/_delete_by_query
+{
+  "query": {
+    "match": {
+      "gender": "male"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "index_patterns": "index2",
+  "version": 76001,
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 0,
+    "index": {
+      "refresh_interval": "20s"
+    }
+  },
+  "mappings": {
+    "properties": {
+      "id": {
+        "type": "integer"
+      },
+      "firstname": {
+        "type": "text"
+      },
+      "lastname": {
+        "type": "text"
+      },
+      "gender": {
+        "type": "keyword"
+      }
+    }
+  }
+}

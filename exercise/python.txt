@@ -1,0 +1,8 @@
+python3 -m venv venv
+source venv/bin/activate
+pip install elasticsearch
+
+remark: data from
+
+https://github.com/earthchie/jquery.Thailand.js
+https://github.com/ignitry/thai-tambons

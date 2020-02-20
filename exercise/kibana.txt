@@ -1,0 +1,36 @@
+=== Part 1 ===
+Index data
+
+POST index1/_doc/1
+{
+  "name": "name1",
+  "last": "last1"
+}
+
+PUT index1/_doc/2
+{
+  "name": "name2",
+  "last": "last2"
+}
+
+Query by id
+
+GET index1/_doc/1
+
+
+Search
+
+GET index1/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+POST index1/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+

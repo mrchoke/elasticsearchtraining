@@ -1,0 +1,68 @@
+Ingest
+=====
+
+PUT _ingest/pipeline/pipeline1
+{
+  "description": "My pipeline for index",
+  "processors": [
+    {
+      "geoip": {
+        "field": "ip",
+        "database_file": "GeoLite2-City.mmdb",
+        "ignore_missing": true,
+        "properties": [
+          "IP",
+          "COUNTRY_ISO_CODE",
+          "COUNTRY_NAME",
+          "CONTINENT_NAME",
+          "REGION_NAME",
+          "CITY_NAME",
+          "TIMEZONE",
+          "LOCATION"
+        ]
+      }
+    },
+    {
+      "user_agent": {
+        "field": "useragent",
+        "ignore_missing": true
+      }
+    },
+    {
+      "set": {
+        "field": "_source.timestamp",
+        "value": "{{_ingest.timestamp}}"
+      }
+    }
+  ]
+}
+
+POST _ingest/pipeline/pipeline1/_simulate
+{
+  "docs": [
+    {
+      "_source": {
+        "id": "4",
+        "title": "การแพทย์ภัยพิบัติและฉุกเฉินเจ้าฟ้าจุฬาภรณ์",
+        "category": "med",
+        "ip": "203.151.81.81",
+        "useragent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"
+      }
+    }
+  ]
+}
+
+
+
+======= index rotation ====
+
+{
+      "date_index_name" : {
+        "field" : "@timestamp",
+        "index_name_prefix" : "proxy_log_",
+        "date_rounding" : "M",
+        "date_formats" : ["yyyy-MM-dd'T'HH:mm:ssZ","ISO8601","yyyy-MM-dd'T'HH:mm:ss.SSSZ"],
+        "index_name_format" : "yyyy-MM"
+       }
+      }
+

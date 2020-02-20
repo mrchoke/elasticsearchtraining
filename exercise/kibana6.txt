@@ -1,0 +1,55 @@
+PUT _template/thailand
+{
+  ... file templates/thailand.json
+}
+
+POST thailand/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+POST thailand/_search
+{
+  "query": {
+    "match": {
+      "amphoe.th": "ท่าชนะ"
+    }
+  }
+}
+
+GET thailand/_search
+{
+  "query": {
+    "wildcard": {
+      "zipcode": {
+        "value": "841*"
+      }
+    }
+  }
+}
+
+GET thailand/_search
+{
+  "size": 0,
+  "aggs": {
+    "province": {
+      "terms": {
+        "field": "province.th.keyword"
+      }
+    }
+  }
+}
+
+POST thailand/_search
+{
+  "size": 0,
+  "aggs": {
+    "type_count": {
+      "cardinality": {
+        "field": "province_code"
+      }
+    }
+  }
+}

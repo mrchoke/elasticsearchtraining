@@ -1,0 +1,128 @@
+{
+  "index_patterns": "thailand",
+  "version": 76001,
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 0,
+    "index": {
+      "refresh_interval": "10s"
+    },
+    "analysis": {
+      "char_filter": {
+        "thai_special_char_filter": {
+          "type": "pattern_replace",
+          "pattern": "ๆ|ฯ|ฯลฯ|ฯ|๚|๚ะ|๛|๏|๏|ฯ|๚|ฯะ|๚ะ|๚ะ|๛|฿",
+          "replacement": ""
+        }
+      },
+      "analyzer": {
+        "mythai": {
+          "type": "custom",
+          "tokenizer": "thai",
+          "char_filter": [
+            "thai_special_char_filter"
+          ]
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "id": {
+        "type": "long"
+      },
+      "district_code": {
+        "type": "long"
+      },
+      "amphoe_code": {
+        "type": "long"
+      },
+      "province_code": {
+        "type": "long"
+      },
+      "geo": {
+        "type": "geo_point"
+      },
+      "amphoe": {
+        "properties": {
+          "en": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          },
+          "th": {
+            "type": "text",
+            "analyzer": "mythai",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          }
+        }
+      },
+      "district": {
+        "properties": {
+          "en": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          },
+          "th": {
+            "type": "text",
+            "analyzer": "mythai",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          }
+        }
+      },
+      "province": {
+        "properties": {
+          "en": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          },
+          "th": {
+            "type": "text",
+            "analyzer": "mythai",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          }
+        }
+      },
+      "timestamp": {
+        "type": "date"
+      },
+      "zipcode": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      }
+    }
+  }
+}

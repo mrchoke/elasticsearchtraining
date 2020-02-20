@@ -1,0 +1,76 @@
+
+
+=== Part2 ===
+PUT _template/index2
+{
+  ... file templates/template1.json
+}
+
+POST index2/_doc/1
+{
+  "firstname": "โชค",
+  "lastname": "ชัย",
+  "gender": "male"
+}
+
+POST index2/_doc
+{
+  "id": "1",
+  "firstname": "โชค",
+  "lastname": "ชัย",
+  "gender": "male"
+}
+
+POST index2/_doc
+{
+  "id": "2",
+  "firstname": "ยาหยี",
+  "lastname": "กาหยู",
+  "gender": "female"
+}
+
+POST index2/_doc
+{
+  "id": "3",
+  "firstname": "joe",
+  "lastname": "jan",
+  "gender": "male"
+}
+
+POST index2/_doc
+{
+  "id": "4",
+  "firstname": "kill",
+  "lastname": "bill",
+  "gender": "male"
+}
+
+GET index2/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+
+
+--- match field ---
+POST index2/_search
+{
+  "query": {
+    "match": {
+      "firstname": "โชค"
+    }
+  }
+}
+
+POST index2/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "กาหยู",
+      "fields": ["firstname","lastname"]
+    }
+  }
+}
+

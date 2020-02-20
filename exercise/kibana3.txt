@@ -1,0 +1,149 @@
+=== Part 3 ===
+
+PUT _template/index3 
+{
+  {
+  ... file templates/template2.json
+ }
+}
+
+POST index3/_doc
+{
+  "id": "1",
+  "title": "การแพทย์ภัยพิบัติและฉุกเฉินเจ้าฟ้าจุฬาภรณ์",
+  "category": "med"
+}
+
+
+POST index3/_doc
+{
+  "id": "2",
+  "title": "วิชาการสถาบันการอาชีวศึกษาเกษตร",
+  "category": "agri"
+}
+
+POST index3/_doc
+{
+  "id": "3",
+  "title": "การพยาบาลและวิทยาศาสตร์สุขภาพ",
+  "category": "med"
+}
+
+POST index3/_doc
+{
+  "id": "4",
+  "title": "สังคมศาสตร์และมานุษยวิทยาเชิงพุทธ",
+  "category": "soc"
+}
+
+--- Bulk ---
+
+POST _bulk
+{ "index" : { "_index" : "index3"} }
+{ "id": "5","title": "วิศวกรรมฟาร์มและเทคโนโลยีการควบคุมอัตโนมัติ", "category": "eng" }
+{ "index" : { "_index" : "index3"} }
+{ "id": "6","title": "มนุษยศาสตร์และสังคมศาสตร์ นายเรืออากาศ", "category": "soc" }
+{ "index" : { "_index" : "index3"} }
+{ "id": "7","title": "วิทยาศาสตร์การออกกำลังกายและกีฬา", "category": "sci" }
+
+
+--- match ---
+POST index3/_search
+{
+  "query": {
+    "match": {
+      "title": "จุฬาภรณ์"
+    }
+  }
+}
+
+POST index3/_search
+{
+  "query": {
+    "match": {
+      "title": "สังคมพุทธ"
+    }
+  }
+}
+
+POST index3/_search
+{
+  "query": {
+    "match": {
+      "title": "พุทธสุขภาพ"
+    }
+  }
+}
+
+POST index3/_search
+{
+  "query": {
+    "match": {
+      "title": "การ"
+    }
+  }
+}
+
+
+
+
+
+--- aggregations ---
+
+group and count
+POST index3/_search
+{
+    "aggs" : {
+        "type_count" : {
+            "cardinality" : {
+                "field" : "category"
+            }
+        }
+    }
+}
+
+POST index3/_search
+{
+  "size": 0, 
+    "aggs" : {
+        "type_count" : {
+            "cardinality" : {
+                "field" : "category"
+            }
+        }
+    }
+}
+
+---
+Term
+
+GET index3/_search
+{
+  "size": 0, 
+    "aggs" : {
+        "cats" : {
+            "terms" : { "field" : "category" } 
+        }
+    }
+}
+
+---
+search and aggregations
+
+GET index3/_search
+{
+  "query": {
+    "match": {
+      "title": "พุทธสุขภาพ"
+    }
+  },
+  "aggs": {
+    "cats": {
+      "terms": {
+        "field": "category"
+      }
+    }
+  }
+}
+
+
