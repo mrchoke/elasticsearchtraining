@@ -26,7 +26,7 @@ services:
 
     volumes:
       - ./.env:/.env
-      - /docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
+      - ./docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
       - ./es_data:/usr/share/elasticsearch/data
     ports:
       - $ES_PORT:9200
