@@ -3,6 +3,20 @@ PUT _template/thailand
   ... file templates/thailand.json
 }
 
+PUT _ingest/pipeline/pipeline1
+{
+  "description": "My pipeline for index",
+  "processors": [
+   
+    {
+      "set": {
+        "field": "_source.timestamp",
+        "value": "{{_ingest.timestamp}}"
+      }
+    }
+  ]
+}
+
 POST thailand/_search
 {
   "query": {
