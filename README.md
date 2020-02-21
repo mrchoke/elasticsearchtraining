@@ -13,8 +13,11 @@ $ cd elasticsearchtraining
 # Docker
 
 ## Setup Environments
-### Edit .env 
-
+### Copy .env
+```
+$ cp defualt.env .env
+```
+### Manual Edit
 ```
 ELK_VERSION=7.6.0
 PROJECT_NAME=Training
@@ -45,6 +48,19 @@ ES Port =  2222
 Kibana Port =  3333
 ==============================%
 ```
+## Before start
+**Linux host only**
+
+###Add below to /etc/sysctl.conf
+```
+vm.max_map_count=262144
+```
+and apply
+
+```
+$ sudo sysctl -p
+```
+
 
 ## Start Docker services
 First time
