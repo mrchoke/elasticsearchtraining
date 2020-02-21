@@ -2,6 +2,9 @@
 *.py[cod]
 *$py.class
 
+es_data/*
+
+!es_data/.gitkeep 
 
 .DS_Store
 
